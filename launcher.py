@@ -11,11 +11,14 @@ window = QWidget()
 
 app.setStyleSheet("""
     QWidget{
-       background-image: url('download1.jpg');
-       background-position: center; 
-       background-repeat: no-repeat; 
-       background-size: cover; 
-       background-width: 100%;
+        background-image: url('download1.jpg');
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover; 
+        background-width: 100%;
+    }
+    QLabel{
+        background-image: none;
     }
     QPushButton{
         background-image: none;
@@ -23,13 +26,6 @@ app.setStyleSheet("""
         border-radius: 9.5px;
         border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 maroon, stop: 0.4 blue,stop: 1 violet);
         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.1 gold, stop: 0.4 lime,stop: 1 blue);
-    }
-    QLabel{
-        background-image: none;        
-        border: 3px solid;
-        border-radius: 6.5px;
-        border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.1 indigo, stop: 0.4 crimson,stop: 0.9 lime);
-        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.05 blue, stop: 0.25 red,stop: 0.85 gold);
     }
     QLineEdit{
         background-image: none;
@@ -44,10 +40,6 @@ app.setStyleSheet("""
         background-image: none;
         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 red, stop: 0.4 gold,stop: 1 aqua);
     }
-    QLabel:hover {
-        background-image: none;
-        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 blue, stop: 0.4 violet,stop: 1 crimson);
-    }   
 """)
 
 mainline = QVBoxLayout()
@@ -78,15 +70,15 @@ def source():
     if response.status_code == 200:
         countries = response.json()
         data = countries[0]
-        info_text = f"name: {data['name']['common']}\n" \
-                    f"area: {data.get('area')} km per square\n" \
-                    f"borders: {data.get('borders')}\n" \
-                    f"capital: {data.get('capital')}\n" \
-                    f"continents: {data.get('region')}\n" \
-                    f"languages: {', '.join(data.get('languages', {}).keys())}\n" \
-                    f"currencies: {', '.join(data.get('currencies', {}).keys())}\n" \
-                    f"population: {data.get('population')} people\n"
-        info.setText(info_text)
+        info_text = name_text = f"name: {data['name']['common']}"
+        area_text = f"area: {data.get('area')} km per square"
+        borders_text = f"borders: {data.get('borders')}"
+        capital_text = f"capital: {data.get('capital')}"
+        continents_text = f"continents: {data.get('region')}"
+        languages_text = f"languages: {', '.join(data.get('languages', {}).keys())}"
+        currencies_text = f"currencies: {', '.join(data.get('currencies', {}).keys())}"
+        population_text = f"population: {data.get('population')} people"
+        info.setText(info_text, area_text, borders_text, capital_text, continents_text, languages_text, currencies_text, population_text)
     else:
         info.setText("Помилка отримання даних з сервера")
 
