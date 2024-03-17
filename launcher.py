@@ -11,7 +11,7 @@ window = QWidget()
 
 app.setStyleSheet("""
     QWidget{
-        background-image: url('download1.jpg');
+        background-image: url('HD-wallpaper-beautiful-sea-view-sea-nature.jpg');
         background-position: center; 
         background-repeat: no-repeat; 
         background-size: cover; 
@@ -70,7 +70,7 @@ def source():
     if response.status_code == 200:
         countries = response.json()
         data = countries[0]
-        info_text = name_text = f"name: {data['name']['common']}"
+        name_text = f"name: {data['name']['common']}"
         area_text = f"area: {data.get('area')} km per square"
         borders_text = f"borders: {data.get('borders')}"
         capital_text = f"capital: {data.get('capital')}"
@@ -78,7 +78,7 @@ def source():
         languages_text = f"languages: {', '.join(data.get('languages', {}).keys())}"
         currencies_text = f"currencies: {', '.join(data.get('currencies', {}).keys())}"
         population_text = f"population: {data.get('population')} people"
-        info.setText(info_text, area_text, borders_text, capital_text, continents_text, languages_text, currencies_text, population_text)
+        info.setText(name_text, area_text, borders_text, capital_text, continents_text, languages_text, currencies_text, population_text)
     else:
         info.setText("Помилка отримання даних з сервера")
 
