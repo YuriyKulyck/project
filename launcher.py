@@ -109,7 +109,7 @@ def source():
         data = countries[0]
         name_text = f"name: {data['name']['common']}"
         area_text = f"area: {data.get('area')} km per square"
-        borders_text = f"borders: {data.get('borders')}"
+        borders_text = f"borders: {str(data.get('borders')).replace('[', '').replace(']', '').replace("'", '')}"
         capital_text = f"capital: {data.get('capital')}"
         continents_text = f"continents: {data.get('region')}"
         languages_text = f"languages: {', '.join(data.get('languages', {}).keys())}"
