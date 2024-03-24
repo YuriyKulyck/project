@@ -46,7 +46,7 @@ app.setStyleSheet("""
         color: yellow;
         font: italic bold 1.9em system-ui;  
     }
-
+    
 
     QPushButton:hover {
         background-image: none;
