@@ -1,6 +1,7 @@
 import json
 import requests
 import self
+import share
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from googletrans import Translator
@@ -55,7 +56,6 @@ app.setStyleSheet("""
 
 mainline = QVBoxLayout()
 hline = QHBoxLayout()
-
 label = QLabel()
 
 label1 = QLabel()
@@ -79,12 +79,15 @@ text = QLabel("Введіть назву держави:")
 countryname = QLineEdit()
 getinfo = QPushButton("Отримати всі дані про державу:")
 info = QLabel("Результат: ")
+translatebut = QPushButton("Відкрити перекладач.")
+translator = Translator()
 
 pixmap = QPixmap('png-transparent-europe-map-europe-white-photography-computer-wallpaper-Photoroom.png-Photoroom.png')
 pixmap=pixmap.scaledToWidth(200)
 label.setPixmap(pixmap)
 
 mainline.addLayout(hline)
+mainline.addWidget(translatebut)
 hline.addWidget(label)
 mainline.addWidget(countryname)
 hline.addWidget(text)
@@ -101,20 +104,53 @@ mainline.addWidget(label8)
 
 window.setLayout(mainline)
 
+def trnwindow():
+    window1 = QDialog()
+    window1.resize(50, 100)
+    languages = QComboBox()
+    languages.addItem("Українська")
+    languages.addItem("Німецька")
+    languages.addItem("Італійська")
+    languages.addItem("Французька")
+    languages.addItem("Англійська")
+    languages.addItem("Іспанська")
+    languages.addItem("Португальська")
+    languages.addItem("Шведська")
+    languages.addItem("Фінська")
+    languages.addItem("Польська")
+    languages.addItem("Угорська")
+    languages.addItem("Хорватська")
+    languages.addItem("Грецька")
+    languages.addItem("Болгарська")
+    languages.addItem("Турецька")
+    languages.addItem("Арабська")
+    languages.addItem("Китайська")
+    languages.addItem("Японська")
+    setlanguage = QPushButton("Перекласти цією мовою.")
+
+    mainline1 = QVBoxLayout()
+    mainline1.addWidget(languages)
+    mainline1.addWidget(setlanguage)
+    window1.setLayout(mainline1)
+    window1.exec()
+
 def source():
     url = f"https://restcountries.com/v3.1/name/{countryname.text()}"
     response = requests.get(url)
     if response.status_code == 200:
         countries = response.json()
         data = countries[0]
-        name_text = f"name: {data['name']['common']}"
-        area_text = f"area: {data.get('area')} km per square"
-        borders_text = f"borders: {str(data.get('borders')).replace('[', '').replace(']', '').replace("'", '')}"
-        capital_text = f"capital: {str(data.get('capital')).replace('[', '').replace(']', '').replace("'", '')}"
-        continents_text = f"continents: {data.get('region')}"
-        languages_text = f"languages: {', '.join(data.get('languages', {}).keys())}"
-        currencies_text = f"currencies: {', '.join(data.get('currencies', {}).keys())}"
-        population_text = f"population: {data.get('population')} people"
+
+        b = str(data.get('borders')).replace('[', '').replace(']', '').replace("'", '')
+        c = str(data.get('capital')).replace('[', '').replace(']', '').replace("'", '')
+        name_text = translator.translate(f"name: {data['name']['common']}", share.language).text
+        area_text = translator.translate(f"area: {data.get('area')} km per square", share.language).text
+        borders_text = translator.translate(f"borders: {str(b)}", share.language).text
+        capital_text = translator.translate(f"capital: {str(c)}", share.language).text
+        continents_text = translator.translate(f"continents: {data.get('region')}", share.language).text
+        languages_text = translator.translate(f"languages: {', '.join(data.get('languages', {}).keys())}", share.language).text
+        currencies_text = translator.translate(f"currencies: {', '.join(data.get('currencies', {}).keys())}", share.language).text
+        population_text = translator.translate(f"population: {data.get('population')} people", share.language).text
         info.hide()
         label1.setText(name_text)
         label1.show()
@@ -136,5 +172,6 @@ def source():
         info.setText("Помилка отримання даних з сервера")
 
 getinfo.clicked.connect(source)
+translatebut.clicked.connect(trnwindow)
 window.show()
 app.exec()
