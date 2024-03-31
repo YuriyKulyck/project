@@ -126,8 +126,46 @@ def trnwindow():
     languages.addItem("Арабська")
     languages.addItem("Китайська")
     languages.addItem("Японська")
-    setlanguage = QPushButton("Перекласти цією мовою.")
+    def changelang():
+        if languages.currentText() == "Англійська":
+            share.language = "en"
+        if languages.currentText() == "Французька":
+            share.language = "fr"
+        if languages.currentText() == "Італійська":
+            share.language = "it"
+        if languages.currentText() == "Німецька":
+            share.language = "de"
+        if languages.currentText() == "Українська":
+            share.language = "uk"
+        if languages.currentText() == "Іспанська":
+            share.language = "es"
+        if languages.currentText() == "Португальська":
+            share.language = "pt"
+        if languages.currentText() == "Шведська":
+            share.language = "sv"
+        if languages.currentText() == "Фінська":
+            share.language = "fi"
+        if languages.currentText() == "Польська":
+            share.language = "pl"
+        if languages.currentText() == "Угорська":
+            share.language = "hu"
+        if languages.currentText() == "Хорватська":
+            share.language = "hr"
+        if languages.currentText() == "Грецька":
+            share.language = "el"
+        if languages.currentText() == "Болгарська":
+            share.language = "bg"
+        if languages.currentText() == "Турецька":
+            share.language = "tr"
+        if languages.currentText() == "Арабська":
+            share.language = "ar"
+        if languages.currentText() == "Китайська":
+            share.language = "zh-cn"
+        if languages.currentText() == "Японська":
+            share.language = "ja"
 
+    setlanguage = QPushButton("Перекласти цією мовою.")
+    setlanguage.clicked.connect(changelang)
     mainline1 = QVBoxLayout()
     mainline1.addWidget(languages)
     mainline1.addWidget(setlanguage)
